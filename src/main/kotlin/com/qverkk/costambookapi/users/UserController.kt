@@ -23,7 +23,8 @@ class UserController {
 
     @PostMapping(
             value = ["/login"],
-            consumes = [MediaType.APPLICATION_JSON_VALUE]
+            consumes = [MediaType.APPLICATION_JSON_VALUE],
+            produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun login(@RequestBody userLogin: UserLogin): ResponseEntity<Any> {
         return service.login(userLogin.username, userLogin.password)
