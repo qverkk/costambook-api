@@ -11,13 +11,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.EnableWebMvc
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import springfox.documentation.swagger2.annotations.EnableSwagger2
 
 
 @SpringBootApplication
 @EnableSwagger2
 @EnableWebSecurity
-class CostambookApiApplication : WebSecurityConfigurerAdapter() {
+@EnableWebMvc
+class CostambookApiApplication : WebSecurityConfigurerAdapter(), WebMvcConfigurer {
     @Bean
     fun passwordEncoder(): PasswordEncoder? {
         return BCryptPasswordEncoder(11)
@@ -31,6 +35,10 @@ class CostambookApiApplication : WebSecurityConfigurerAdapter() {
                 .authorizeRequests()
                 .antMatchers("/swagger-ui").permitAll()
                 .antMatchers("/user/login*", "/user/register*").permitAll()
+    }
+
+    override fun addCorsMappings(registry: CorsRegistry) {
+        registry.addMapping("/**")
     }
 
     @Bean
