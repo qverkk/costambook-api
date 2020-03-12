@@ -1,5 +1,8 @@
-package com.qverkk.costambookapi.users
+package com.qverkk.costambookapi.controller
 
+import com.qverkk.costambookapi.service.JpaUserService
+import com.qverkk.costambookapi.model.UserDTO
+import com.qverkk.costambookapi.model.UserLogin
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity

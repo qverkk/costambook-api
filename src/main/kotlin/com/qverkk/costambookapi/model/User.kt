@@ -1,4 +1,4 @@
-package com.qverkk.costambookapi.users
+package com.qverkk.costambookapi.model
 
 import javax.persistence.*
 import javax.validation.constraints.Size

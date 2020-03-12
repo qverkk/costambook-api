@@ -1,5 +1,8 @@
-package com.qverkk.costambookapi.users
+package com.qverkk.costambookapi.service
 
+import com.qverkk.costambookapi.model.User
+import com.qverkk.costambookapi.model.UserDTO
+import com.qverkk.costambookapi.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -26,7 +29,7 @@ class JpaUserService(val repository: UserRepository): UserService {
             return ResponseEntity("User already exists", HttpStatus.OK)
         }
         val newUser = User(
-            null,
+                null,
                 user.username,
                 passwordEncoder.encode(user.password),
                 user.firstName,

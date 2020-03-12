@@ -1,5 +1,6 @@
-package com.qverkk.costambookapi.users
+package com.qverkk.costambookapi.service
 
+import com.qverkk.costambookapi.model.UserDTO
 import org.springframework.http.ResponseEntity
 
 interface UserService {
