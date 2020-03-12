@@ -9,9 +9,8 @@ import javax.validation.constraints.Size
 data class User(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @NotNull
-        @Column(name = "id")
-        val id: Long,
+        @Column(name = "user_id")
+        val userId: Long?,
         @NotNull
         @Column(name = "username")
         val username: String,
@@ -20,19 +19,24 @@ data class User(
         @Size(min = 8, max = 50)
         val password: String,
         @NotNull
-        @Column(name = "firstName")
+        @Column(name = "first_name")
         @Size(min = 1, max = 30)
         val firstName: String,
         @NotNull
-        @Column(name = "lastName")
+        @Column(name = "last_name")
         @Size(min = 1, max = 30)
         val lastName: String
 )
 
 data class UserDTO(
-        val id: Long,
+        val userId: Long,
         val username: String,
         val password: String,
         val firstName: String,
         val lastName: String
+)
+
+data class UserLogin(
+        val username: String,
+        val password: String
 )
