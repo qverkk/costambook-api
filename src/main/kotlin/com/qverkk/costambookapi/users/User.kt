@@ -1,29 +1,24 @@
 package com.qverkk.costambookapi.users
 
 import javax.persistence.*
-import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 @Entity
 @Table(name = "Users")
 data class User(
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "user_id")
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        @Column(name = "user_id", unique = true, nullable = false)
         val userId: Long?,
-        @NotNull
-        @Column(name = "username")
+        @Column(name = "username", nullable = false)
         val username: String,
-        @NotNull
-        @Column(name = "password")
+        @Column(name = "password", nullable = false)
         @Size(min = 8, max = 50)
         val password: String,
-        @NotNull
-        @Column(name = "first_name")
+        @Column(name = "first_name", nullable = false)
         @Size(min = 1, max = 30)
         val firstName: String,
-        @NotNull
-        @Column(name = "last_name")
+        @Column(name = "last_name", nullable = false)
         @Size(min = 1, max = 30)
         val lastName: String
 )

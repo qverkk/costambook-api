@@ -13,6 +13,7 @@ class UserController {
     private lateinit var service: JpaUserService
 
     @PostMapping(
+            value = ["/register"],
             produces = [MediaType.APPLICATION_JSON_VALUE],
             consumes = [MediaType.APPLICATION_JSON_VALUE]
     )
@@ -21,8 +22,7 @@ class UserController {
     }
 
     @PostMapping(
-            name = "/login",
-            produces = [MediaType.APPLICATION_JSON_VALUE],
+            value = ["/login"],
             consumes = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun login(@RequestBody userLogin: UserLogin): ResponseEntity<Any> {

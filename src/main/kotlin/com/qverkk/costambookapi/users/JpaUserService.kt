@@ -28,7 +28,7 @@ class JpaUserService(val repository: UserRepository): UserService {
         val newUser = User(
             null,
                 user.username,
-                user.password,
+                passwordEncoder.encode(user.password),
                 user.firstName,
                 user.lastName
         );
