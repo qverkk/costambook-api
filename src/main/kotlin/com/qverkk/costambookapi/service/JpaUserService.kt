@@ -1,7 +1,9 @@
 package com.qverkk.costambookapi.service
 
+import com.qverkk.costambookapi.model.Authorities
 import com.qverkk.costambookapi.model.User
 import com.qverkk.costambookapi.model.UserDTO
+import com.qverkk.costambookapi.repository.AuthorityRepository
 import com.qverkk.costambookapi.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -10,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service("User service")
-class JpaUserService(val repository: UserRepository): UserService {
+class JpaUserService(val repository: UserRepository, val authorityRepository: AuthorityRepository): UserService {
 
     @Autowired
     private lateinit var passwordEncoder: PasswordEncoder
@@ -32,10 +34,12 @@ class JpaUserService(val repository: UserRepository): UserService {
                 null,
                 user.username,
                 passwordEncoder.encode(user.password),
+                true,
                 user.firstName,
                 user.lastName
         );
         val createdUser = repository.save(newUser)
+        authorityRepository.save(Authorities(createdUser.username, com.qverkk.costambookapi.constants.Authorities.USER))
         return ResponseEntity(createdUser, HttpStatus.CREATED)
     }
 

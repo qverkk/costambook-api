@@ -1,8 +1,8 @@
 package com.qverkk.costambookapi.controller
 
-import com.qverkk.costambookapi.service.JpaUserService
 import com.qverkk.costambookapi.model.UserDTO
 import com.qverkk.costambookapi.model.UserLogin
+import com.qverkk.costambookapi.service.JpaUserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -31,5 +31,12 @@ class UserController {
     )
     fun login(@RequestBody userLogin: UserLogin): ResponseEntity<Any> {
         return service.login(userLogin.username, userLogin.password)
+    }
+
+    @GetMapping(
+            value = ["/test"]
+    )
+    fun test(): String {
+        return "Hello world"
     }
 }
