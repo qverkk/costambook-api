@@ -1,6 +1,9 @@
 package com.qverkk.costambookapi.service
 
+import com.qverkk.costambookapi.constants.JwtUtils
+import com.qverkk.costambookapi.constants.SecurityConstants
 import com.qverkk.costambookapi.model.Authorities
+import com.qverkk.costambookapi.model.JwtResponse
 import com.qverkk.costambookapi.model.User
 import com.qverkk.costambookapi.model.UserDTO
 import com.qverkk.costambookapi.repository.AuthorityRepository
@@ -8,6 +11,9 @@ import com.qverkk.costambookapi.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -16,6 +22,10 @@ class JpaUserService(val repository: UserRepository, val authorityRepository: Au
 
     @Autowired
     private lateinit var passwordEncoder: PasswordEncoder
+    @Autowired
+    private lateinit var authenticationManager: AuthenticationManager
+    @Autowired
+    private lateinit var jwtUtils: JwtUtils
 
     override fun login(username: String, password: String): ResponseEntity<Any> {
         val user = repository.findUserByUsername(username)
@@ -23,7 +33,20 @@ class JpaUserService(val repository: UserRepository, val authorityRepository: Au
         if (passwordEncoder.matches(password, user.password).not()) {
             return ResponseEntity("Password doesn't match", HttpStatus.OK)
         }
-        return ResponseEntity(user, HttpStatus.OK)
+        val authentication = authenticationManager.authenticate(
+                UsernamePasswordAuthenticationToken(username, password)
+        )
+        SecurityContextHolder.getContext().authentication = authentication
+        val token = jwtUtils.generateToken(authentication)
+        return ResponseEntity(
+                JwtResponse(
+                        SecurityConstants.TOKEN_TYPE + token,
+                        user.userId,
+                        user.username,
+                        user.firstName,
+                        user.lastName
+                )
+                , HttpStatus.OK)
     }
 
     override fun registerNewUserAccount(user: UserDTO): ResponseEntity<Any> {
@@ -45,5 +68,9 @@ class JpaUserService(val repository: UserRepository, val authorityRepository: Au
 
     fun userExists(username: String): Boolean {
         return repository.findUserByUsername(username) != null
+    }
+
+    override fun findUserByUsername(name: String): UserDTO? {
+        return repository.findUserByUsername(name)
     }
 }

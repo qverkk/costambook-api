@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("/user")
@@ -38,5 +39,15 @@ class UserController {
     )
     fun test(): String {
         return "Hello world"
+    }
+
+    @GetMapping(
+            value = ["/current"],
+            produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
+    @ResponseBody
+    fun getCurrentUser(request: HttpServletRequest): UserDTO? {
+        val principal = request.userPrincipal
+        return service.findUserByUsername(principal.name)
     }
 }

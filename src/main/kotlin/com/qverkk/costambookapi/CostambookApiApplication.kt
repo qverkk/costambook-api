@@ -1,11 +1,12 @@
 package com.qverkk.costambookapi
 
-import com.qverkk.costambookapi.filter.JwtAuthenticationFilter
+import com.qverkk.costambookapi.constants.JwtUtils
 import com.qverkk.costambookapi.filter.JwtAuthorizationFilter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
+import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -49,6 +50,8 @@ class CostambookApiApplication : WebSecurityConfigurerAdapter(), WebMvcConfigure
     private lateinit var dataSource: DataSource
     @Autowired
     private lateinit var userDetailsService: UserDetailsService
+    @Autowired
+    private lateinit var authenticationManager: AuthenticationManager
 
     override fun configure(http: HttpSecurity) {
         http.cors().and()
@@ -60,12 +63,12 @@ class CostambookApiApplication : WebSecurityConfigurerAdapter(), WebMvcConfigure
                         "/v2/api-docs",
                         "/swagger-ui.html",
                         "/user/login*",
-                        "/user/register*"
+                        "/user/register*",
+                        "/user/auth*"
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(JwtAuthenticationFilter(authenticationManager()))
-                .addFilter(JwtAuthorizationFilter(authenticationManager()))
+                .addFilter(JwtAuthorizationFilter(authenticationManager))
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
@@ -93,11 +96,21 @@ class CostambookApiApplication : WebSecurityConfigurerAdapter(), WebMvcConfigure
     }
 
     @Bean
+    override fun authenticationManagerBean(): AuthenticationManager {
+        return super.authenticationManagerBean()
+    }
+
+    @Bean
     fun authProvider(): DaoAuthenticationProvider {
         val authProvider = DaoAuthenticationProvider()
         authProvider.setUserDetailsService(userDetailsService)
         authProvider.setPasswordEncoder(passwordEncoder())
         return authProvider
+    }
+
+    @Bean
+    fun jwtUtilsBean(): JwtUtils {
+        return JwtUtils()
     }
 
     @Bean

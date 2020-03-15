@@ -2,7 +2,7 @@ package com.qverkk.costambookapi.constants
 
 class SecurityConstants private constructor() {
     companion object {
-        const val AUTH_LOGIN_URL = "/user/login"
+//        const val AUTH_LOGIN_URL = "/api/user/login"
         // Signing key for HS512 algorithm
         // You can use the page http://www.allkeysgenerator.com/ to generate all kinds of keys
         const val JWT_SECRET = "n2r5u8x/A%D*G-KaPdSgVkYp3s6v9y\$B&E(H+MbQeThWmZq4t7w!z%C*F-J@NcRf"
