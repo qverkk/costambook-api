@@ -40,7 +40,7 @@ class JpaUserService(val repository: UserRepository, val authorityRepository: Au
         val token = jwtUtils.generateToken(authentication)
         return ResponseEntity(
                 JwtResponse(
-                        SecurityConstants.TOKEN_TYPE + token,
+                        SecurityConstants.TOKEN_PREFIX + token,
                         user.userId,
                         user.username,
                         user.firstName,
