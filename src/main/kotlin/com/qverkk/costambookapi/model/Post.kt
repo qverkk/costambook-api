@@ -11,24 +11,24 @@ data class Post(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "post_id", unique = true, nullable = false)
-        val id: Long,
+        val postId: Long?,
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "user_id", nullable = false)
-        @JsonIgnore
-        val user: User,
+        var user: User?,
         val description: String,
         @Lob
         @Column(name = "image", nullable = true)
         val image: ByteArray?
 ) {
+    constructor() : this(null, null, "", null)
 
-    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "post", fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    val likes = mutableListOf<Likes>()
-
-    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "post", fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    val comments = mutableListOf<Comments>()
+//    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "post", fetch = FetchType.LAZY)
+//    @Fetch(FetchMode.SELECT)
+//    val likes = mutableListOf<Likes>()
+//
+//    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "post", fetch = FetchType.LAZY)
+//    @Fetch(FetchMode.SELECT)
+//    val comments = mutableListOf<Comments>()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -36,7 +36,7 @@ data class Post(
 
         other as Post
 
-        if (id != other.id) return false
+        if (postId != other.postId) return false
         if (description != other.description) return false
         if (user != other.user) return false
         if (image != null) {
@@ -48,7 +48,7 @@ data class Post(
     }
 
     override fun hashCode(): Int {
-        var result = id.hashCode()
+        var result = postId.hashCode()
         result = 31 * result + description.hashCode()
         result = 31 * result + user.hashCode()
         result = 31 * result + (image?.contentHashCode() ?: 0)
@@ -58,8 +58,8 @@ data class Post(
 }
 
 data class PostDTO(
-        val id: Long,
-        val user: User,
+        val postId: Long?,
+        var user: User?,
         val description: String,
         val image: ByteArray?
 ) {
@@ -69,7 +69,7 @@ data class PostDTO(
 
         other as PostDTO
 
-        if (id != other.id) return false
+        if (postId != other.postId) return false
         if (user != other.user) return false
         if (description != other.description) return false
         if (image != null) {
@@ -81,7 +81,7 @@ data class PostDTO(
     }
 
     override fun hashCode(): Int {
-        var result = id.hashCode()
+        var result = postId.hashCode()
         result = 31 * result + user.hashCode()
         result = 31 * result + description.hashCode()
         result = 31 * result + (image?.contentHashCode() ?: 0)

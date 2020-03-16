@@ -1,8 +1,6 @@
 package com.qverkk.costambookapi.model
 
 import com.qverkk.costambookapi.constants.Authorities
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
 import javax.persistence.*
 import javax.validation.constraints.Size
 
@@ -27,18 +25,23 @@ data class User(
         @Size(min = 1, max = 30)
         val lastName: String
 ) {
-    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    val posts = mutableListOf<Post>()
 
-    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    val likes = mutableListOf<Likes>()
+    constructor() : this(null, "", "", true, "", "") {
 
+    }
 
-    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    val comments = mutableListOf<Comments>()
+//    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.LAZY)
+//    @Fetch(FetchMode.SELECT)
+//    val posts = mutableListOf<Post>()
+//
+//    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.LAZY)
+//    @Fetch(FetchMode.SELECT)
+//    val likes = mutableListOf<Likes>()
+//
+//
+//    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.LAZY)
+//    @Fetch(FetchMode.SELECT)
+//    val comments = mutableListOf<Comments>()
 }
 
 data class UserDTO(
