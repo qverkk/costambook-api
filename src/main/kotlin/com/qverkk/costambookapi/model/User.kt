@@ -8,7 +8,7 @@ import javax.validation.constraints.Size
 @Table(name = "Users")
 data class User(
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "user_id", unique = true, nullable = false)
         val userId: Long?,
         @Column(name = "username", nullable = false)
@@ -24,7 +24,10 @@ data class User(
         @Column(name = "last_name", nullable = false)
         @Size(min = 1, max = 30)
         val lastName: String
-)
+) {
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.EAGER)
+    val posts = mutableListOf<Post>()
+}
 
 data class UserDTO(
         val userId: Long,
@@ -33,7 +36,9 @@ data class UserDTO(
         val enabled: Boolean,
         val firstName: String,
         val lastName: String
-)
+) {
+        val posts: MutableList<Post>? = mutableListOf()
+}
 
 data class UserLogin(
         val username: String,
@@ -47,7 +52,7 @@ data class Authorities(
         val username: String,
         val authority: Authorities
 ) {
-        constructor() : this("admin", Authorities.ADMIN)
+    constructor() : this("admin", Authorities.ADMIN)
 }
 
 data class AuthoritiesDTO(

@@ -1,19 +1,22 @@
 package com.qverkk.costambookapi.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
 @Table(name = "posts")
 data class Post(
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "post_id", unique = true, nullable = false)
         val id: Long,
-        @Column(name = "user_id", nullable = false)
-        val userId: Long,
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "customer_id", nullable = false)
+        @JsonIgnore
+        val user: User,
         val description: String,
         @Lob
-        @Column(name = "image", nullable = true, columnDefinition = "mediumblob")
+        @Column(name = "image", nullable = true)
         val image: ByteArray?
 ) {
     override fun equals(other: Any?): Boolean {
@@ -23,8 +26,8 @@ data class Post(
         other as Post
 
         if (id != other.id) return false
-        if (userId != other.userId) return false
         if (description != other.description) return false
+        if (user != other.user) return false
         if (image != null) {
             if (other.image == null) return false
             if (!image.contentEquals(other.image)) return false
@@ -35,16 +38,17 @@ data class Post(
 
     override fun hashCode(): Int {
         var result = id.hashCode()
-        result = 31 * result + userId.hashCode()
         result = 31 * result + description.hashCode()
+        result = 31 * result + user.hashCode()
         result = 31 * result + (image?.contentHashCode() ?: 0)
         return result
     }
+
 }
 
 data class PostDTO(
         val id: Long,
-        val userId: Long,
+        val user: User,
         val description: String,
         val image: ByteArray?
 ) {
@@ -55,7 +59,7 @@ data class PostDTO(
         other as PostDTO
 
         if (id != other.id) return false
-        if (userId != other.userId) return false
+        if (user != other.user) return false
         if (description != other.description) return false
         if (image != null) {
             if (other.image == null) return false
@@ -67,7 +71,7 @@ data class PostDTO(
 
     override fun hashCode(): Int {
         var result = id.hashCode()
-        result = 31 * result + userId.hashCode()
+        result = 31 * result + user.hashCode()
         result = 31 * result + description.hashCode()
         result = 31 * result + (image?.contentHashCode() ?: 0)
         return result
