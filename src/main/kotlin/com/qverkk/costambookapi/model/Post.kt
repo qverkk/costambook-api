@@ -1,6 +1,8 @@
 package com.qverkk.costambookapi.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
 import javax.persistence.*
 
 @Entity
@@ -21,7 +23,12 @@ data class Post(
 ) {
 
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "post", fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     val likes = mutableListOf<Likes>()
+
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "post", fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    val comments = mutableListOf<Comments>()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

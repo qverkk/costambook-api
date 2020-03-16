@@ -9,17 +9,19 @@ data class Comments(
       @GeneratedValue(strategy = GenerationType.AUTO)
       @Column(name = "comment_id", unique = true, nullable = false)
       val id: Long,
-      @Column(name = "post_id", nullable = false)
-      val postId: Long,
-      @Column(name = "user_id", nullable = false)
-      val userId: Long,
+      @ManyToOne(fetch = FetchType.LAZY)
+      @JoinColumn(name = "post_id", nullable = false)
+      val post: Post,
+      @ManyToOne(fetch = FetchType.LAZY)
+      @JoinColumn(name = "user_id", nullable = false)
+      val user: User,
       @Column(name = "text", nullable = false)
       val text: String
 )
 
 data class CommentsDTO(
         val id: Long,
-        val postId: Long,
-        val userId: Long,
+        val post: Post,
+        val user: User,
         val text: String
 )

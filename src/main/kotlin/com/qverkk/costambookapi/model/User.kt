@@ -33,7 +33,12 @@ data class User(
 
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    val likes  = mutableListOf<Likes>()
+    val likes = mutableListOf<Likes>()
+
+
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    val comments = mutableListOf<Comments>()
 }
 
 data class UserDTO(
