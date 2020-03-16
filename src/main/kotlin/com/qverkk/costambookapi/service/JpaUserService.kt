@@ -73,4 +73,8 @@ class JpaUserService(val repository: UserRepository, val authorityRepository: Au
     override fun findUserByUsername(name: String): UserDTO? {
         return repository.findUserByUsername(name)
     }
+
+    override fun isTokenValid(token: String): Boolean {
+        return jwtUtils.validateToken(token)
+    }
 }

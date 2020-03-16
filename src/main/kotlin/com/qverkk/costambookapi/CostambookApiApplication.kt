@@ -64,7 +64,8 @@ class CostambookApiApplication : WebSecurityConfigurerAdapter(), WebMvcConfigure
                         "/swagger-ui.html",
                         "/user/login*",
                         "/user/register*",
-                        "/user/auth*"
+                        "/user/auth*",
+                        "/user/validate"
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and()

@@ -7,4 +7,5 @@ interface UserService {
     fun login(username: String, password: String): ResponseEntity<Any>
     fun registerNewUserAccount(user: UserDTO): ResponseEntity<Any>
     fun findUserByUsername(name: String): UserDTO?
+    fun isTokenValid(token: String): Boolean
 }

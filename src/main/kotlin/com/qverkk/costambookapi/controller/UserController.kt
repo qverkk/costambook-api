@@ -50,4 +50,17 @@ class UserController {
         val principal = request.userPrincipal
         return service.findUserByUsername(principal.name)
     }
+
+    @GetMapping(
+            value = ["/validate"],
+            produces = [MediaType.APPLICATION_JSON_VALUE],
+            params = ["token"]
+    )
+    fun validateToken(@RequestParam token: String): Boolean {
+        return try {
+            service.isTokenValid(token)
+        } catch (e: Exception) {
+            false
+        }
+    }
 }
