@@ -18,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service("User service")
-class JpaUserService(val repository: UserRepository, val authorityRepository: AuthorityRepository): UserService {
+class JpaUserService(val repository: UserRepository, val authorityRepository: AuthorityRepository) : UserService {
 
     @Autowired
     private lateinit var passwordEncoder: PasswordEncoder
@@ -60,7 +60,7 @@ class JpaUserService(val repository: UserRepository, val authorityRepository: Au
                 true,
                 user.firstName,
                 user.lastName
-        );
+        )
         val createdUser = repository.save(newUser)
         authorityRepository.save(Authorities(createdUser.username, com.qverkk.costambookapi.constants.Authorities.USER))
         return ResponseEntity(createdUser, HttpStatus.CREATED)

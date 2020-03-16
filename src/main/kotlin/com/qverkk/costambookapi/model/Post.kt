@@ -1,8 +1,5 @@
 package com.qverkk.costambookapi.model
 
-import com.fasterxml.jackson.annotation.JsonIgnore
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
 import javax.persistence.*
 
 @Entity

@@ -139,11 +139,11 @@ class CostambookApiApplication : WebSecurityConfigurerAdapter(), WebMvcConfigure
     }
 
     private fun defaultAuth(): List<SecurityReference> {
-        val authorizationScope = AuthorizationScope("global", "accessEverything");
+        val authorizationScope = AuthorizationScope("global", "accessEverything")
         val authorizationScopes = mutableListOf<AuthorizationScope>()
         authorizationScopes.add(authorizationScope)
         return listOf(
-                SecurityReference("JWT", authorizationScopes.toTypedArray()));
+                SecurityReference("JWT", authorizationScopes.toTypedArray()))
     }
 
 

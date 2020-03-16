@@ -1,22 +1,16 @@
 package com.qverkk.costambookapi.filter
 
-import com.google.gson.JsonParser
 import com.qverkk.costambookapi.constants.SecurityConstants
 import io.jsonwebtoken.*
-import io.jsonwebtoken.security.Keys
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.core.userdetails.User
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import java.io.IOException
-import java.util.*
 import java.util.stream.Collectors
 import javax.servlet.FilterChain
 import javax.servlet.ServletException

@@ -26,9 +26,7 @@ data class User(
         val lastName: String
 ) {
 
-    constructor() : this(null, "", "", true, "", "") {
-
-    }
+    constructor() : this(null, "", "", true, "", "")
 
 //    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.LAZY)
 //    @Fetch(FetchMode.SELECT)
