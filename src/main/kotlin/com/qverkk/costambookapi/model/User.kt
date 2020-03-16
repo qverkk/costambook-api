@@ -1,6 +1,8 @@
 package com.qverkk.costambookapi.model
 
 import com.qverkk.costambookapi.constants.Authorities
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
 import javax.persistence.*
 import javax.validation.constraints.Size
 
@@ -26,7 +28,12 @@ data class User(
         val lastName: String
 ) {
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     val posts = mutableListOf<Post>()
+
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    val likes  = mutableListOf<Likes>()
 }
 
 data class UserDTO(
@@ -37,7 +44,8 @@ data class UserDTO(
         val firstName: String,
         val lastName: String
 ) {
-        val posts: MutableList<Post>? = mutableListOf()
+    val posts: MutableList<Post>? = mutableListOf()
+    val likes: MutableList<Likes>? = mutableListOf()
 }
 
 data class UserLogin(

@@ -17,12 +17,16 @@ data class Likes(
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "post_id", nullable = false)
         val post: Post,
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "user_id", nullable = false)
+        val user: User,
         @Column(name = "like_type", nullable = false)
         val type: LikeType
 )
 
 data class LikesDTO(
         val id: Long,
-        val commentId: Long,
+        val post: Post,
+        val user: User,
         val type: LikeType
 )
