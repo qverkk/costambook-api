@@ -14,8 +14,9 @@ data class Likes(
         @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(name = "like_id", nullable = false, unique = true)
         val id: Long,
-        @Column(name = "comment_id", nullable = false)
-        val commentId: Long,
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "post_id", nullable = false)
+        val post: Post,
         @Column(name = "like_type", nullable = false)
         val type: LikeType
 )

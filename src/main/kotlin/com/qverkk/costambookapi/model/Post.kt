@@ -11,7 +11,7 @@ data class Post(
         @Column(name = "post_id", unique = true, nullable = false)
         val id: Long,
         @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "customer_id", nullable = false)
+        @JoinColumn(name = "user_id", nullable = false)
         @JsonIgnore
         val user: User,
         val description: String,
@@ -19,6 +19,10 @@ data class Post(
         @Column(name = "image", nullable = true)
         val image: ByteArray?
 ) {
+
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "post", fetch = FetchType.EAGER)
+    val likes = mutableListOf<Likes>()
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
