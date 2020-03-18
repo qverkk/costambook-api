@@ -43,10 +43,11 @@ class JwtUtils {
 
     fun validateToken(token: String): Boolean {
         try {
+            val signingKey = SecurityConstants.JWT_SECRET.toByteArray()
             Jwts.parserBuilder()
-                    .setSigningKey(SecurityConstants.JWT_SECRET)
+                    .setSigningKey(signingKey)
                     .build()
-                    .parseClaimsJws(token)
+                    .parseClaimsJws(token.replace("Bearer ", ""))
             return true
         } catch (exception: ExpiredJwtException) {
             println("Request to parse expired JWT : $token failed : ${exception.message}")
