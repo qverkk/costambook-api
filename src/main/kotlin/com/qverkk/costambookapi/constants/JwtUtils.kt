@@ -49,22 +49,16 @@ class JwtUtils {
                     .parseClaimsJws(token)
             return true
         } catch (exception: ExpiredJwtException) {
-            log.warn("Request to parse expired JWT : {} failed : {}", token, exception.message)
+            println("Request to parse expired JWT : $token failed : ${exception.message}")
         } catch (exception: UnsupportedJwtException) {
-            log.warn("Request to parse unsupported JWT : {} failed : {}", token, exception.message)
+            println("Request to parse unsupported JWT : $token failed : ${exception.message}")
         } catch (exception: MalformedJwtException) {
-            log.warn("Request to parse invalid JWT : {} failed : {}", token, exception.message)
+            println("Request to parse invalid JWT : $token failed : ${exception.message}")
         } catch (exception: SignatureException) {
-            log.warn("Request to parse JWT with invalid signature : {} failed : {}", token, exception.message)
+            println("Request to parse JWT with invalid signature : $token failed : ${exception.message}")
         } catch (exception: IllegalArgumentException) {
-            log.warn("Request to parse empty or null JWT : {} failed : {}", token, exception.message)
+            println("Request to parse empty or null JWT : $token failed : ${exception.message}")
         }
-
         return false
-    }
-
-
-    companion object {
-        private val log: Logger = LoggerFactory.getLogger(JwtAuthorizationFilter::class.java)
     }
 }
