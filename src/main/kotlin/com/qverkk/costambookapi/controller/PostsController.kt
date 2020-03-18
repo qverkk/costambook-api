@@ -27,8 +27,13 @@ class PostsController {
     }
 
     @PostMapping()
-    fun createPost(@RequestBody post: Post, request: HttpServletRequest): Boolean {
+    fun createPost(@RequestBody wrapper: FormWrapper, request: HttpServletRequest): Boolean {
         val principal = request.userPrincipal
-        return service.createPost(post, principal.name)
+        return service.createPost(Post(user = null, postId = -1, description = wrapper.description, image = wrapper.file?.toByteArray()), principal.name)
     }
+
+    data class FormWrapper(
+            val description: String,
+            val file: String?
+    )
 }
