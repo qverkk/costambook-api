@@ -16,6 +16,13 @@ class UserController {
     @Autowired
     private lateinit var service: JpaUserService
 
+    @GetMapping(
+            params = ["id"]
+    )
+    fun getUserInformationForId(@RequestParam id: Long): UserDTO? {
+        return service.findUserById(id)
+    }
+
     @PostMapping(
             value = ["/register"],
             produces = [MediaType.APPLICATION_JSON_VALUE],
