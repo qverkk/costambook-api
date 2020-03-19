@@ -11,7 +11,8 @@ enum class LikeType {
 @Table(name = "likes")
 data class Likes(
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @SequenceGenerator(name = "id_seq", sequenceName = "like_id_seq", allocationSize = 1)
+        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_seq")
         @Column(name = "like_id", nullable = false, unique = true)
         val id: Long?,
         @ManyToOne(fetch = FetchType.LAZY)

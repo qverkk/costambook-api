@@ -26,15 +26,7 @@ class JpaLikesService(
             likeRepository.setLikeByUserAndPost(wrapper.userId, wrapper.postId, wrapper.likeType)
             return true
         }
-        val post = postsRepository.findByPostId(wrapper.postId) ?: return false
-        val user = userRepository.findUserByUserId(wrapper.userId) ?: return false
-        val like = Likes(
-                null,
-                post,
-                user,
-                wrapper.likeType
-        )
-        likeRepository.save(like)
+        likeRepository.saveNewLike(wrapper.userId, wrapper.postId, wrapper.likeType.ordinal)
         return true
     }
 }
