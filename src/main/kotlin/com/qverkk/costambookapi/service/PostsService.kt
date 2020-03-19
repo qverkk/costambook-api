@@ -8,4 +8,5 @@ interface PostsService {
     fun findPostsByUserId(userId: Long): List<PostDTO>
     fun findPostsByUsername(username: String): List<PostDTO>
     fun createPost(post: Post, username: String): Boolean
+    fun findByPostId(postId: Long): Post?
 }

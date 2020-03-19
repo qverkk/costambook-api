@@ -44,6 +44,10 @@ class JpaPostsService(val postsRepository: PostsRepository, val userRepository: 
         return true
     }
 
+    override fun findByPostId(postId: Long): Post? {
+        return postsRepository.findByPostId(postId)
+    }
+
     private fun getUserByUsername(username: String): User? {
         val userDto = userRepository.findUserByUsername(username) ?: return null
         return User(

@@ -41,7 +41,7 @@ class JpaUserService(val repository: UserRepository, val authorityRepository: Au
         return ResponseEntity(
                 JwtResponse(
                         SecurityConstants.TOKEN_PREFIX + token,
-                        user.userId,
+                        user.userId!!,
                         user.username,
                         user.firstName,
                         user.lastName
@@ -70,11 +70,11 @@ class JpaUserService(val repository: UserRepository, val authorityRepository: Au
         return repository.findUserByUsername(username) != null
     }
 
-    override fun findUserByUsername(name: String): UserDTO? {
+    override fun findUserByUsername(name: String): User? {
         return repository.findUserByUsername(name)
     }
 
-    override fun findUserById(id: Long): UserDTO? {
+    override fun findUserById(id: Long): User? {
         return repository.findUserByUserId(id)
     }
 

@@ -13,7 +13,7 @@ data class Likes(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(name = "like_id", nullable = false, unique = true)
-        val id: Long,
+        val id: Long?,
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "post_id", nullable = false)
         val post: Post,
@@ -26,7 +26,5 @@ data class Likes(
 
 data class LikesDTO(
         val id: Long,
-        val post: Post,
-        val user: User,
         val type: LikeType
 )

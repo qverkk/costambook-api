@@ -6,7 +6,7 @@ import com.qverkk.costambookapi.model.User
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface PostsRepository : JpaRepository<Post, Long> {
-    fun findByPostId(postId: Long): PostDTO?
+    fun findByPostId(postId: Long): Post?
     fun findAllByUser(user: User): List<PostDTO>
     fun findAllByPostIdAfter(id: Long): List<PostDTO>
 }

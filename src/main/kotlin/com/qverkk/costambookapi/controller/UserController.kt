@@ -1,5 +1,6 @@
 package com.qverkk.costambookapi.controller
 
+import com.qverkk.costambookapi.model.User
 import com.qverkk.costambookapi.model.UserDTO
 import com.qverkk.costambookapi.model.UserLogin
 import com.qverkk.costambookapi.service.JpaUserService
@@ -19,7 +20,7 @@ class UserController {
     @GetMapping(
             params = ["id"]
     )
-    fun getUserInformationForId(@RequestParam id: Long): UserDTO? {
+    fun getUserInformationForId(@RequestParam id: Long): User? {
         return service.findUserById(id)
     }
 
@@ -53,7 +54,7 @@ class UserController {
             produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun getCurrentUser(request: HttpServletRequest): UserDTO? {
+    fun getCurrentUser(request: HttpServletRequest): User? {
         val principal = request.userPrincipal
         return service.findUserByUsername(principal.name)
     }
