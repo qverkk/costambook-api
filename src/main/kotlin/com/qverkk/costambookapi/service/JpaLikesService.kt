@@ -7,7 +7,6 @@ import com.qverkk.costambookapi.model.Post
 import com.qverkk.costambookapi.repository.LikesRepository
 import com.qverkk.costambookapi.repository.PostsRepository
 import com.qverkk.costambookapi.repository.UserRepository
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service("Likes service")
@@ -22,14 +21,13 @@ class JpaLikesService(
     }
 
     override fun performLike(wrapper: LikeWrapper): Boolean {
-        val user = userRepository.findUserByUserId(wrapper.userId) ?: return false
-        val post = postsRepository.findByPostId(wrapper.postId) ?: return false
-        val userLike = likeRepository.findAllByPostEquals(post).firstOrNull { it.user.userId == wrapper.userId }
-        if (userLike != null) {
-            userLike.type = wrapper.likeType
-            likeRepository.save(userLike)
+        val orElse = likeRepository.getLikeByUserIdAndPostId(wrapper.userId, wrapper.postId)
+        if (orElse != null) {
+            likeRepository.setLikeByUserAndPost(wrapper.userId, wrapper.postId, wrapper.likeType)
             return true
         }
+        val post = postsRepository.findByPostId(wrapper.postId) ?: return false
+        val user = userRepository.findUserByUserId(wrapper.userId) ?: return false
         val like = Likes(
                 null,
                 post,

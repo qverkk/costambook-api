@@ -16,13 +16,15 @@ data class Likes(
         val id: Long?,
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "post_id", nullable = false)
-        val post: Post,
+        val post: Post?,
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "user_id", nullable = false)
-        val user: User,
+        val user: User?,
         @Column(name = "like_type", nullable = false)
-        var type: LikeType
-)
+        var type: LikeType?
+) {
+    constructor(): this(-1, null, null, null)
+}
 
 data class LikesDTO(
         val id: Long,
