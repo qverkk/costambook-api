@@ -1,10 +1,7 @@
 package com.qverkk.costambookapi.constants
 
-import com.qverkk.costambookapi.filter.JwtAuthorizationFilter
 import io.jsonwebtoken.*
 import io.jsonwebtoken.security.Keys
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.User

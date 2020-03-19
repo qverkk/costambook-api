@@ -14,7 +14,7 @@ class JpaLikesService(
         private val likeRepository: LikesRepository,
         private val userRepository: UserRepository,
         private val postsRepository: PostsRepository
-): LikesService {
+) : LikesService {
 
     override fun getLikesForPost(post: Post): List<LikesDTO> {
         return likeRepository.findAllByPost(post)

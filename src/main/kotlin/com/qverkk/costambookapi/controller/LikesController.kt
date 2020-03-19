@@ -2,7 +2,6 @@ package com.qverkk.costambookapi.controller
 
 import com.qverkk.costambookapi.model.LikeType
 import com.qverkk.costambookapi.model.LikesDTO
-import com.qverkk.costambookapi.model.Post
 import com.qverkk.costambookapi.service.JpaLikesService
 import com.qverkk.costambookapi.service.JpaPostsService
 import org.springframework.beans.factory.annotation.Autowired
