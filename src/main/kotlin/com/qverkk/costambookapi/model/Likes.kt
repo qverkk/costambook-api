@@ -21,7 +21,7 @@ data class Likes(
         @JoinColumn(name = "user_id", nullable = false)
         val user: User,
         @Column(name = "like_type", nullable = false)
-        val type: LikeType
+        var type: LikeType
 )
 
 data class LikesDTO(
