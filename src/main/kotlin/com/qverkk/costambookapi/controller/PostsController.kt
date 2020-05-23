@@ -39,7 +39,19 @@ class PostsController {
             params = ["userId"]
     )
     fun getPostsByUser(@RequestParam userId: Long): List<PostDTO> {
-        return service.findPostsByUserId(userId)
+        val posts = service.findPostsByUserId(userId)
+        val result = mutableListOf<PostDTO>()
+        posts.forEach {
+            result.add(
+                    PostDTO(
+                            it.postId,
+                            it.user,
+                            it.description,
+                            it.image?.let { it1 -> decompressImage(it1) }
+                    )
+            )
+        }
+        return result
     }
 
     @PostMapping()
